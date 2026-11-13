@@ -1,0 +1,16 @@
+zomato:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_SERVICE_LOGIN') }}"
+      role: DBT_ROLE
+      warehouse: ZOMATO_WH
+      database: ZOMATO
+      schema: STAGING
+      threads: 4
+      authenticator: SNOWFLAKE_JWT
+      private_key_path: /run/secrets/snowflake_airflow_key.p8
+      private_key_passphrase: "{{ env_var('SNOWFLAKE_KEY_PASSPHRASE') }}"
+      connect_retries: 0

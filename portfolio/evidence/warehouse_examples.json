@@ -1,0 +1,198 @@
+{
+  "enrichment_examples": [
+    {
+      "REVIEW_ID": "1",
+      "COMMENT": "Great eco-friendly packaging. Delivered right on time.",
+      "SENTIMENT_LABEL": "positive",
+      "SENTIMENT_SCORE": 0.9,
+      "TOPIC": "packaging",
+      "KEY_ISSUE": null,
+      "MODEL": "gpt-4o-mini"
+    },
+    {
+      "REVIEW_ID": "2",
+      "COMMENT": "Far too expensive for what you get.",
+      "SENTIMENT_LABEL": "negative",
+      "SENTIMENT_SCORE": -0.7,
+      "TOPIC": "pricing",
+      "KEY_ISSUE": "too expensive for value",
+      "MODEL": "gpt-4o-mini"
+    },
+    {
+      "REVIEW_ID": "3",
+      "COMMENT": "An average experience overall.",
+      "SENTIMENT_LABEL": "neutral",
+      "SENTIMENT_SCORE": 0.0,
+      "TOPIC": "other",
+      "KEY_ISSUE": null,
+      "MODEL": "gpt-4o-mini"
+    },
+    {
+      "REVIEW_ID": "4",
+      "COMMENT": "The delivery partner was polite and helpful.",
+      "SENTIMENT_LABEL": "positive",
+      "SENTIMENT_SCORE": 0.8,
+      "TOPIC": "service",
+      "KEY_ISSUE": null,
+      "MODEL": "gpt-4o-mini"
+    },
+    {
+      "REVIEW_ID": "5",
+      "COMMENT": "Great eco-friendly packaging.",
+      "SENTIMENT_LABEL": "positive",
+      "SENTIMENT_SCORE": 0.8,
+      "TOPIC": "packaging",
+      "KEY_ISSUE": null,
+      "MODEL": "gpt-4o-mini"
+    }
+  ],
+  "review_mart": [
+    {
+      "CITY": "Ahmedabad",
+      "TOPIC": "service",
+      "SENTIMENT_LABEL": "positive",
+      "REVIEWS": 1,
+      "AVG_SENTIMENT_SCORE": 0.8,
+      "AVG_STAR_RATING": "5.00",
+      "FLAGGED_ISSUES": 0
+    },
+    {
+      "CITY": "Bangalore",
+      "TOPIC": "packaging",
+      "SENTIMENT_LABEL": "positive",
+      "REVIEWS": 1,
+      "AVG_SENTIMENT_SCORE": 0.8,
+      "AVG_STAR_RATING": "5.00",
+      "FLAGGED_ISSUES": 0
+    },
+    {
+      "CITY": "Kendujhar",
+      "TOPIC": "packaging",
+      "SENTIMENT_LABEL": "positive",
+      "REVIEWS": 1,
+      "AVG_SENTIMENT_SCORE": 0.9,
+      "AVG_STAR_RATING": "4.00",
+      "FLAGGED_ISSUES": 0
+    },
+    {
+      "CITY": "Khammam",
+      "TOPIC": "other",
+      "SENTIMENT_LABEL": "neutral",
+      "REVIEWS": 1,
+      "AVG_SENTIMENT_SCORE": 0.0,
+      "AVG_STAR_RATING": "3.00",
+      "FLAGGED_ISSUES": 0
+    },
+    {
+      "CITY": "Naraingarh",
+      "TOPIC": "pricing",
+      "SENTIMENT_LABEL": "negative",
+      "REVIEWS": 1,
+      "AVG_SENTIMENT_SCORE": -0.7,
+      "AVG_STAR_RATING": "2.00",
+      "FLAGGED_ISSUES": 1
+    }
+  ],
+  "fact_counts": [
+    {
+      "RELATION": "FCT_ORDERS",
+      "ROW_COUNT": 10000000
+    },
+    {
+      "RELATION": "FACT_ORDER_ITEMS",
+      "ROW_COUNT": 22998179
+    }
+  ],
+  "core_counts": [
+    {
+      "TABLE_SCHEMA": "AI",
+      "TABLE_NAME": "REVIEW_ENRICHED",
+      "ROW_COUNT": 5
+    },
+    {
+      "TABLE_SCHEMA": "MARTS",
+      "TABLE_NAME": "DIM_CUSTOMER",
+      "ROW_COUNT": 100000
+    },
+    {
+      "TABLE_SCHEMA": "MARTS",
+      "TABLE_NAME": "DIM_DATE",
+      "ROW_COUNT": 1096
+    },
+    {
+      "TABLE_SCHEMA": "MARTS",
+      "TABLE_NAME": "DIM_FOOD",
+      "ROW_COUNT": 371561
+    },
+    {
+      "TABLE_SCHEMA": "MARTS",
+      "TABLE_NAME": "DIM_RESTAURANTS",
+      "ROW_COUNT": 148541
+    },
+    {
+      "TABLE_SCHEMA": "MARTS",
+      "TABLE_NAME": "FACT_ORDER_ITEMS",
+      "ROW_COUNT": 22998179
+    },
+    {
+      "TABLE_SCHEMA": "MARTS",
+      "TABLE_NAME": "FCT_ORDERS",
+      "ROW_COUNT": 10000000
+    },
+    {
+      "TABLE_SCHEMA": "MARTS",
+      "TABLE_NAME": "MART_DAILY_CITY_REVENUNE",
+      "ROW_COUNT": 427221
+    },
+    {
+      "TABLE_SCHEMA": "MARTS",
+      "TABLE_NAME": "MART_DELIVERY_SLA",
+      "ROW_COUNT": 12816
+    },
+    {
+      "TABLE_SCHEMA": "MARTS",
+      "TABLE_NAME": "MART_RESTAURANT_PERFORMANCE",
+      "ROW_COUNT": 148541
+    },
+    {
+      "TABLE_SCHEMA": "MARTS",
+      "TABLE_NAME": "MART_REVIEW_INSIGHTS",
+      "ROW_COUNT": 5
+    },
+    {
+      "TABLE_SCHEMA": "RAW",
+      "TABLE_NAME": "FOOD",
+      "ROW_COUNT": 371561
+    },
+    {
+      "TABLE_SCHEMA": "RAW",
+      "TABLE_NAME": "MENU",
+      "ROW_COUNT": 1179936
+    },
+    {
+      "TABLE_SCHEMA": "RAW",
+      "TABLE_NAME": "ORDERS",
+      "ROW_COUNT": 10000000
+    },
+    {
+      "TABLE_SCHEMA": "RAW",
+      "TABLE_NAME": "ORDER_ITEMS",
+      "ROW_COUNT": 22998179
+    },
+    {
+      "TABLE_SCHEMA": "RAW",
+      "TABLE_NAME": "RESTAURANTS",
+      "ROW_COUNT": 148541
+    },
+    {
+      "TABLE_SCHEMA": "RAW",
+      "TABLE_NAME": "REVIEWS",
+      "ROW_COUNT": 300000
+    },
+    {
+      "TABLE_SCHEMA": "RAW",
+      "TABLE_NAME": "USERS",
+      "ROW_COUNT": 100000
+    }
+  ]
+}

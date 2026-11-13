@@ -1,0 +1,37 @@
+{
+  "source": "Observed live app outputs transcribed during 2026-11-13 desktop capture; screenshots are the retained UI evidence.",
+  "corpus_size": 100,
+  "top_k": 5,
+  "dataset": "Tutorial-generated review text",
+  "examples": [
+    {
+      "question": "What do these reviews say about food quality and taste?",
+      "answer": "The reviews consistently highlight that the food has an authentic taste and is cooked perfectly, as noted in multiple reviews [7], [12], [99], [30], [93].",
+      "citations": [
+        "7",
+        "12",
+        "99",
+        "30",
+        "93"
+      ],
+      "sufficient_context": true,
+      "screenshot": "09-rag-food-quality.jpg"
+    },
+    {
+      "question": "What complaints about price or value appear in these reviews?",
+      "answer": "A reviewer complained that the service was overpriced and not worth it, stating that the quality has really dropped lately [78].",
+      "citations": [
+        "78"
+      ],
+      "sufficient_context": true,
+      "screenshot": "10-rag-price-value.jpg"
+    },
+    {
+      "question": "What was the company profit in 2025?",
+      "answer": "The retrieved reviews do not provide enough evidence to answer this question.",
+      "citations": [],
+      "sufficient_context": false,
+      "screenshot": "11-rag-insufficient-evidence.jpg"
+    }
+  ]
+}

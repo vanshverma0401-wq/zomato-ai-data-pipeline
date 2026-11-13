@@ -1,0 +1,21 @@
+sources:
+- name: raw
+  database: zomato
+  schema: RAW
+  tables:
+  - name: restaurants
+    description: Recorded restaurant attributes, including display-formatted rating, rating-count and cost fields.
+  - name: reviews
+    description: Recorded review identifiers, order/customer/restaurant links, rating, comment and review date.
+  - name: food
+    description: Recorded food identifiers, item names and vegetarian/non-vegetarian labels.
+  - name: users
+    description: Recorded tutorial customer identifiers and customer/demographic attributes.
+  - name: orders
+    description: Recorded order headers, statuses, monetary fields and delivery-duration attributes.
+  - name: menu
+    description: Recorded restaurant/food menu associations and displayed prices.
+  - name: order_items
+    description: Recorded order lines, price, quantity and line amount.
+  description: Seven tutorial source tables persisted in Snowflake RAW from the private S3 stage. These are tutorial data,
+    not a production commerce feed.

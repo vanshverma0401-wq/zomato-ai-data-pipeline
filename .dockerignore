@@ -1,0 +1,16 @@
+**
+!.dockerignore
+!airflow/
+airflow/**
+!airflow/Dockerfile
+!airflow/requirements-airflow.txt
+!airflow/requirements-dbt.txt
+!airflow/requirements-ai.txt
+!ai/
+ai/**
+!ai/*.py
+!tests/
+tests/**
+!tests/ai/
+tests/ai/**
+!tests/ai/*.py

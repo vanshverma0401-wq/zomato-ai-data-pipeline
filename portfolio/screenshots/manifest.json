@@ -1,0 +1,137 @@
+[
+  {
+    "file": "08-sql-delivered-gmv.jpg",
+    "title": "SQL: delivered GMV by city",
+    "caption": "Live Streamlit generation, reviewed SQL and ten Snowflake results. GMV is recorded delivered sales amount, not profit.",
+    "date": "2026-11-13",
+    "width": 1600,
+    "height": 1000,
+    "sha256": "765fd31becec4193a843f23ddc2a281240e914dd9354bfa56ba550b8e914e0f2"
+  },
+  {
+    "file": "09-rag-food-quality.jpg",
+    "title": "RAG: food-quality question",
+    "caption": "Live app answer with five retrieved source excerpts and matching inline review-ID citations.",
+    "date": "2026-11-13",
+    "width": 1600,
+    "height": 1000,
+    "sha256": "19067d3763d9901a2487940ac8fc56a0f412dc37d28b949e01ca77ab6cd5864a"
+  },
+  {
+    "file": "10-rag-price-value.jpg",
+    "title": "RAG: price/value complaint",
+    "caption": "Live app answer cites review78; retrieved positive value comments remain visible for comparison.",
+    "date": "2026-11-13",
+    "width": 1600,
+    "height": 1000,
+    "sha256": "43c825b206af0c0ac7f794d00e1af97e835d77b9f7d4b31843334077edc49bfc"
+  },
+  {
+    "file": "11-rag-insufficient-evidence.jpg",
+    "title": "RAG: insufficient evidence",
+    "caption": "Live app declines a company-profit question that the review excerpts cannot answer.",
+    "date": "2026-11-13",
+    "width": 1600,
+    "height": 1000,
+    "sha256": "3a334fd60e2019382821ea0697b878a3a20d991a4f2ae6b2d52be985a7d32dfe"
+  },
+  {
+    "file": "12-dbt-full-lineage.jpg",
+    "title": "dbt: full release lineage",
+    "caption": "Generated dbt documentation after the successful final run, including the AI source, mart and tests.",
+    "date": "2026-11-13",
+    "width": 1600,
+    "height": 1000,
+    "sha256": "b30a76b7d5ed2f5d297dc352b89c20838ef3a36991083ce43d9ed2f3bdd21560"
+  },
+  {
+    "file": "13-sql-delivery-time.jpg",
+    "title": "SQL: delivered-order duration",
+    "caption": "Live reviewed query computes order-grain AVG for delivered orders; ten highest-average cities returned. Captured before the later independent column-resolution guard.",
+    "date": "2026-11-13",
+    "width": 1600,
+    "height": 1000,
+    "sha256": "f3320d0ea26aa892af12e76be337555b49088c72ad3ff2ef55318bf92b4090f8"
+  },
+  {
+    "file": "14-dbt-ai-mart-catalog.jpg",
+    "title": "dbt: AI mart catalog",
+    "caption": "Generated catalog shows the five-row AI mart, its documented grain, limits and output columns.",
+    "date": "2026-11-13",
+    "width": 1600,
+    "height": 1000,
+    "sha256": "e7f8644ea1ac1b60a2a124d1f5c3b3ed1a43b330b9d6afe62f7a42a403e81db1"
+  },
+  {
+    "file": "15-airflow-final-success.jpg",
+    "title": "Airflow: four-task run passed",
+    "caption": "All four tasks green, final run success, manual trigger, first attempts. 44seconds is an existing-data replay, not a fresh-load benchmark.",
+    "date": "2026-11-13",
+    "width": 1600,
+    "height": 1000,
+    "sha256": "a9c20e11d91b9181e0ebba24a39a373202ecc4a321d1911064e9afeddf3b5376"
+  },
+  {
+    "file": "16-project-overview.jpg",
+    "title": "Project overview",
+    "caption": "Rendered summary of saved verification facts, explicitly labeled as a portfolio evidence view rather than a live dashboard.",
+    "date": "2026-11-13",
+    "width": 1600,
+    "height": 1000,
+    "sha256": "7871436f2e7791c243c3187392996a3ef075a7cb78ae6b9c42d88645dd0df904"
+  },
+  {
+    "file": "17-enrichment-three-examples.jpg",
+    "title": "Enrichment: positive, negative and neutral",
+    "caption": "Rendered saved Snowflake outputs for three generated review texts. Labels and scores came from the successful final enrichment task.",
+    "date": "2026-11-13",
+    "width": 1600,
+    "height": 1000,
+    "sha256": "786041b71ef539006133b2ee366a8813818ba8592d4fea4a876c1f28911cda49"
+  },
+  {
+    "file": "18-review-insights-mart.jpg",
+    "title": "Enrichment: downstream review mart",
+    "caption": "Rendered saved Snowflake rows grouped by city/topic/sentiment; five reviews demonstrate the workflow only.",
+    "date": "2026-11-13",
+    "width": 1600,
+    "height": 1000,
+    "sha256": "2a7164618a0a9d5737eb1081f428527ce351fdea584f226bd04cf72dbadfda55"
+  },
+  {
+    "file": "19-airflow-ai-tests-pass.jpg",
+    "title": "Airflow: AI build/test log",
+    "caption": "Live Airflow log viewer shows1model,12passing data tests,PASS13 and exitcode0.",
+    "date": "2026-11-13",
+    "width": 1600,
+    "height": 1000,
+    "sha256": "e0502b91538da34c74218df4d38f06b195869d124f2adddf7fe8042f1daf6904"
+  },
+  {
+    "file": "20-dbt-orders-catalog.jpg",
+    "title": "dbt: order-fact catalog",
+    "caption": "Generated catalog for the10million-row order fact with authored descriptions and incremental-model context.",
+    "date": "2026-11-13",
+    "width": 1600,
+    "height": 1000,
+    "sha256": "9ce753ad69c1bc301b9a57206c67968941b3af9acc9b1ad6bafc0cdd916f264a"
+  },
+  {
+    "file": "21-sql-cancellation-rate.jpg",
+    "title": "SQL: cancellation by payment method",
+    "caption": "Live generation and execution after the final schema-resolution guard. Numerator counts Cancelled orders; denominator includes all orders. Five methods returned.",
+    "date": "2026-11-13",
+    "width": 1600,
+    "height": 1000,
+    "sha256": "54bf53f4fcddf8550a896817bf60c85c77698b5a3708519be40fc006145e7814"
+  },
+  {
+    "file": "22-sql-gmv-chart.jpg",
+    "title": "SQL: result chart",
+    "caption": "Live chart of the same delivered-GMV result, rendered locally without another model call.",
+    "date": "2026-11-13",
+    "width": 1600,
+    "height": 1000,
+    "sha256": "d4018632cbe6400306769d5b617953cf8329855787ad31fed86d18fcce54a4e2"
+  }
+]

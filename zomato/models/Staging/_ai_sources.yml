@@ -1,0 +1,79 @@
+version: 2
+sources:
+- name: ai
+  database: ZOMATO
+  schema: AI
+  description: Hosted-model review interpretations stored separately from source ratings and deterministic warehouse facts.
+  tables:
+  - name: review_enriched
+    config:
+      tags:
+      - ai
+    columns:
+    - name: review_id
+      data_tests:
+      - unique:
+          config:
+            tags:
+            - ai
+      - not_null:
+          config:
+            tags:
+            - ai
+      description: Source review ID converted to STRING and used as the MERGE key; configured uniqueness/non-null tests remain
+        in place.
+    - name: sentiment_label
+      data_tests:
+      - not_null:
+          config:
+            tags:
+            - ai
+      - accepted_values:
+          arguments:
+            values:
+            - positive
+            - negative
+            - neutral
+          config:
+            tags:
+            - ai
+      description: Validated model label positive, negative or neutral.
+    - name: sentiment_score
+      data_tests:
+      - not_null:
+          config:
+            tags:
+            - ai
+      description: Validated finite model score from -1 to 1; not a calibrated probability or source rating.
+    - name: topic
+      data_tests:
+      - not_null:
+          config:
+            tags:
+            - ai
+      - accepted_values:
+          arguments:
+            values:
+            - food quality
+            - delivery
+            - pricing
+            - service
+            - packaging
+            - other
+          config:
+            tags:
+            - ai
+      description: Validated topic from the six-category classifier taxonomy.
+    - name: key_issue
+      description: NULL or a model-supplied phrase of at most six words; not independently verified.
+    - name: model
+      description: Hosted chat-model identifier used for the classification.
+    - name: comment_sha256
+      description: SHA-256 of the full source comment, used to detect a changed input; inference may use a bounded excerpt.
+    - name: prompt_version
+      description: Classifier prompt-version identifier stored with the output.
+    - name: enriched_at
+      description: Snowflake TIMESTAMP_LTZ assigned when the retained classification is inserted or updated.
+    description: Latest retained classification per review_id, written by a bounded enrichment process using MERGE. Repeated
+      runs may accumulate more review IDs; model/text/prompt changes replace the retained result rather than creating historical
+      versions.

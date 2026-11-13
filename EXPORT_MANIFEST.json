@@ -1,0 +1,528 @@
+{
+  "date": "2026-11-13",
+  "source_baseline": "57d147dfe6aaed6bfe7c215d74185c39358790a4",
+  "offline_tests_passed": 77,
+  "live_scope": "Private working environment: four-task DAG, enrichment, RAG and SQL examples; public configuration separately offline qualified.",
+  "files": [
+    {
+      "path": ".dockerignore",
+      "bytes": 227,
+      "sha256": "3cebfb506cf1155b9a426166d64064c512cc4cb2b995d4b8dc1e77f4682f4083"
+    },
+    {
+      "path": ".env.example",
+      "bytes": 85,
+      "sha256": "14bebd62bb3bb8a25adf63ff2177393584a7d5208bfbc05f530f2464354d13f6"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 242,
+      "sha256": "6dbabdd12f0c478c63417cd1ce64dc015c1ea06caa85637ee48376c939090b0c"
+    },
+    {
+      "path": "FINAL_TESTING.md",
+      "bytes": 784,
+      "sha256": "65c6dc11886e2069fa1792a75ca6719c2f268c027323510468e68e6c08d6bda8"
+    },
+    {
+      "path": "NOTICE",
+      "bytes": 1231,
+      "sha256": "07f294ad39ef27eae49f5160a8a69bc6d08f8f9e61afee2d929941953dbab805"
+    },
+    {
+      "path": "OFFLINE_TEST_RESULTS.txt",
+      "bytes": 12083,
+      "sha256": "2be09e7c43d13b2d2c314aa937a165da65e8fac4a70a0560008e02791d31ae9b"
+    },
+    {
+      "path": "README.md",
+      "bytes": 6483,
+      "sha256": "faa687917c0aa090561556d5447f9ac83c4d5810887e6d5957f0ccf5951eb469"
+    },
+    {
+      "path": "ai/__init__.py",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "ai/common.py",
+      "bytes": 13578,
+      "sha256": "9834abe577ae94f4c0f51e6f662943058e3a36bb2b9c66f6c14f3e3e2438d8b6"
+    },
+    {
+      "path": "ai/enrich_reviews.py",
+      "bytes": 1038,
+      "sha256": "e32485d891f0b28af94ace5859a7345c0c3afa7059efc355a005bd5224964c08"
+    },
+    {
+      "path": "ai/enrichment.py",
+      "bytes": 8784,
+      "sha256": "91fa0d3d970abc0f1ccfe7d2e0cf65d7f3c91124dda11b2b9fc10079e37e2ae5"
+    },
+    {
+      "path": "ai/preflight.py",
+      "bytes": 1270,
+      "sha256": "8ed33c4bc9bdb1fb3529dfaa431e8e7b852eaffded84e55bd8f91e1002c18d22"
+    },
+    {
+      "path": "ai/rag.py",
+      "bytes": 14382,
+      "sha256": "e4a9d36b6a1ec06a88f89cf339b332d6023f80e7fa3ac6ad0c7da554f39d1d04"
+    },
+    {
+      "path": "ai/rag_chat.py",
+      "bytes": 5670,
+      "sha256": "6705c4557e2b20450f3772f6ac32589d29255efde9bafe182bec5891e985d141"
+    },
+    {
+      "path": "ai/sql_query.py",
+      "bytes": 14438,
+      "sha256": "66ffb34dbd689a4b811cf7f6501d0d5ca42de40594f945c671719de464cbbe98"
+    },
+    {
+      "path": "ai/text_to_sql.py",
+      "bytes": 3668,
+      "sha256": "124aff20542243cab41feee5f8edfecded49d8e07a5e32f5d812017f29b495d5"
+    },
+    {
+      "path": "airflow/Dockerfile",
+      "bytes": 1280,
+      "sha256": "387d4aa916c1902c4bc21517e391275d4a0818b913e6d66fbdc55981db3a94dc"
+    },
+    {
+      "path": "airflow/airflow.sh",
+      "bytes": 217,
+      "sha256": "d98b49cbf5e399a958b29e90546c1ed9f8774fece12eae6c45b9983167da1138"
+    },
+    {
+      "path": "airflow/dags/zomato_batch.py",
+      "bytes": 2310,
+      "sha256": "7afc832a25ce64104df118d44eeb34a018f34b6d73c1c03ef281593cb4cb2868"
+    },
+    {
+      "path": "airflow/dags/zomato_local_check.py",
+      "bytes": 887,
+      "sha256": "57ef26d7b8601d5e4ca681e3158ae4c2ac6103de79a966acac6ac6b7cf33b24e"
+    },
+    {
+      "path": "airflow/docker-compose.yaml",
+      "bytes": 4037,
+      "sha256": "df75b0d0d26357d9fc16afcc5402b545de62a2be14ab6166e1697a260ce5a4e4"
+    },
+    {
+      "path": "airflow/profiles/profiles.yml",
+      "bytes": 477,
+      "sha256": "7e50ec0aff2cae4a102d64f37c7681f0523d600c399964b4b9a500c0f6c2dfed"
+    },
+    {
+      "path": "airflow/requirements-ai.txt",
+      "bytes": 109,
+      "sha256": "203cc1b9471a1bfcf15d775ea5f2f52313d2025b3c8040433d98627b9b4d1cca"
+    },
+    {
+      "path": "airflow/requirements-airflow.txt",
+      "bytes": 142,
+      "sha256": "f88df20bbcc54b2e770671efaaedad30aa44412a8ee7a18525fca934b7dae649"
+    },
+    {
+      "path": "airflow/requirements-dbt.txt",
+      "bytes": 73,
+      "sha256": "449b1be7b8c9cebac6cd0c4eb61eaca41ea2c92e34baf77ea44cce5ab7944cc0"
+    },
+    {
+      "path": "airflow/runtime.env.example",
+      "bytes": 541,
+      "sha256": "ffdac5b2c3e68c57a397de97abde2bf7000bd6a692705b027f901685c9927b70"
+    },
+    {
+      "path": "airflow/scripts/initialize.sh",
+      "bytes": 445,
+      "sha256": "11e35954560518a807a44eaf6a108e5909bacfd8aede9d52dcbdf2f2e55853b0"
+    },
+    {
+      "path": "aws/iam/s3-read-policy.json",
+      "bytes": 330,
+      "sha256": "57e5ceff2e157066263be93634bb20b8229cbd9cde41ba0a31ccf5613619bd0e"
+    },
+    {
+      "path": "aws/iam/snowflake-role-trust-policy-final.json",
+      "bytes": 287,
+      "sha256": "6d0bd53adf40522293e5fb46f461f71f943e6d848eeda653d0cc3285a17cadf1"
+    },
+    {
+      "path": "aws/iam/snowflake-role-trust-policy-initial.json",
+      "bytes": 187,
+      "sha256": "ae2d435e4c90f281a878a6f185cd4bc8e61dee8793f364c449784413494471c8"
+    },
+    {
+      "path": "docs/CASE_STUDY.md",
+      "bytes": 9586,
+      "sha256": "dfe45e41d8f31b442926056d558b3aa2e48202365cb0f17e30e27046bb26ee57"
+    },
+    {
+      "path": "docs/DATA.md",
+      "bytes": 3615,
+      "sha256": "57325a42e6ae610c638b3e6ab821a2c728007bfffa410b2cfe46e986b2e30104"
+    },
+    {
+      "path": "docs/EXPORT_ADAPTATIONS.md",
+      "bytes": 3754,
+      "sha256": "866c669bcaa8a4c1ce5cdb4fb1009fe1890d4ffd9f67b1589a8b8f8bd3cff9ae"
+    },
+    {
+      "path": "docs/FEATURES.md",
+      "bytes": 10688,
+      "sha256": "3eef684d5a0fe70948f937313b071b75590841da4a2687f672e2ac1acec824ae"
+    },
+    {
+      "path": "docs/PUBLIC_CONFIGURATION.diff",
+      "bytes": 9374,
+      "sha256": "ad8988d28879ce5f7b222c41e6641fa7aedf3813cc2b5a966665156d03257cde"
+    },
+    {
+      "path": "docs/SETUP.md",
+      "bytes": 11862,
+      "sha256": "7db8d84e8fc412608551b51c1e3d7d32f2fc6cc66173037f1027aa0023a665d8"
+    },
+    {
+      "path": "docs/SHUTDOWN.md",
+      "bytes": 2291,
+      "sha256": "9436e1e1447759d32a1e2776c984fa5bc58f709c4ae3fc54b213ff42d39190fc"
+    },
+    {
+      "path": "docs/VERIFICATION.md",
+      "bytes": 2933,
+      "sha256": "abc99db15d6ab5f1b5cca646ebd9272e8ad214f7f555fec264cafa6acd18483d"
+    },
+    {
+      "path": "portfolio/README.md",
+      "bytes": 4469,
+      "sha256": "517f2b82fb09bda78a4ca4fdd06957b04e2dad4ee003269ce3b5df3539e841af"
+    },
+    {
+      "path": "portfolio/build_showcase.py",
+      "bytes": 7443,
+      "sha256": "8022bde77202a681aa7ab3906d704b1f364a08d3a0bc22c78196298def3f9137"
+    },
+    {
+      "path": "portfolio/evidence/dbt_build_ai_summary.txt",
+      "bytes": 353,
+      "sha256": "c8a2ec439b91d2a94ed57717e5454d790be27591b25ec5e0e9cda890c3f044b9"
+    },
+    {
+      "path": "portfolio/evidence/dbt_build_core_summary.txt",
+      "bytes": 391,
+      "sha256": "e5f8a860d2e09bb9ad553f3642df78f3ddefc1d7f97d73abf0f68357e1d4f296"
+    },
+    {
+      "path": "portfolio/evidence/rag_examples.json",
+      "bytes": 1325,
+      "sha256": "efbed301594d773399768ea69ca9e3e1c123116d8d2dba081e6c2f3058575d33"
+    },
+    {
+      "path": "portfolio/evidence/release_summary.json",
+      "bytes": 982,
+      "sha256": "a800e61258bb4f0c60d2e0747117cae528c6e590e7fee1acbc8e9f314cd2a98f"
+    },
+    {
+      "path": "portfolio/evidence/warehouse_examples.json",
+      "bytes": 4467,
+      "sha256": "d966d4bba665727587d97459d2addde91a56125d0b22d1194daaf2208b738dce"
+    },
+    {
+      "path": "portfolio/screenshots/08-sql-delivered-gmv.jpg",
+      "bytes": 69725,
+      "sha256": "765fd31becec4193a843f23ddc2a281240e914dd9354bfa56ba550b8e914e0f2"
+    },
+    {
+      "path": "portfolio/screenshots/09-rag-food-quality.jpg",
+      "bytes": 100324,
+      "sha256": "19067d3763d9901a2487940ac8fc56a0f412dc37d28b949e01ca77ab6cd5864a"
+    },
+    {
+      "path": "portfolio/screenshots/10-rag-price-value.jpg",
+      "bytes": 98176,
+      "sha256": "43c825b206af0c0ac7f794d00e1af97e835d77b9f7d4b31843334077edc49bfc"
+    },
+    {
+      "path": "portfolio/screenshots/11-rag-insufficient-evidence.jpg",
+      "bytes": 98851,
+      "sha256": "3a334fd60e2019382821ea0697b878a3a20d991a4f2ae6b2d52be985a7d32dfe"
+    },
+    {
+      "path": "portfolio/screenshots/12-dbt-full-lineage.jpg",
+      "bytes": 70623,
+      "sha256": "b30a76b7d5ed2f5d297dc352b89c20838ef3a36991083ce43d9ed2f3bdd21560"
+    },
+    {
+      "path": "portfolio/screenshots/13-sql-delivery-time.jpg",
+      "bytes": 69335,
+      "sha256": "f3320d0ea26aa892af12e76be337555b49088c72ad3ff2ef55318bf92b4090f8"
+    },
+    {
+      "path": "portfolio/screenshots/14-dbt-ai-mart-catalog.jpg",
+      "bytes": 97353,
+      "sha256": "e7f8644ea1ac1b60a2a124d1f5c3b3ed1a43b330b9d6afe62f7a42a403e81db1"
+    },
+    {
+      "path": "portfolio/screenshots/15-airflow-final-success.jpg",
+      "bytes": 118048,
+      "sha256": "a9c20e11d91b9181e0ebba24a39a373202ecc4a321d1911064e9afeddf3b5376"
+    },
+    {
+      "path": "portfolio/screenshots/16-project-overview.jpg",
+      "bytes": 155390,
+      "sha256": "7871436f2e7791c243c3187392996a3ef075a7cb78ae6b9c42d88645dd0df904"
+    },
+    {
+      "path": "portfolio/screenshots/17-enrichment-three-examples.jpg",
+      "bytes": 123512,
+      "sha256": "786041b71ef539006133b2ee366a8813818ba8592d4fea4a876c1f28911cda49"
+    },
+    {
+      "path": "portfolio/screenshots/18-review-insights-mart.jpg",
+      "bytes": 90222,
+      "sha256": "2a7164618a0a9d5737eb1081f428527ce351fdea584f226bd04cf72dbadfda55"
+    },
+    {
+      "path": "portfolio/screenshots/19-airflow-ai-tests-pass.jpg",
+      "bytes": 319916,
+      "sha256": "e0502b91538da34c74218df4d38f06b195869d124f2adddf7fe8042f1daf6904"
+    },
+    {
+      "path": "portfolio/screenshots/20-dbt-orders-catalog.jpg",
+      "bytes": 96297,
+      "sha256": "9ce753ad69c1bc301b9a57206c67968941b3af9acc9b1ad6bafc0cdd916f264a"
+    },
+    {
+      "path": "portfolio/screenshots/21-sql-cancellation-rate.jpg",
+      "bytes": 64623,
+      "sha256": "54bf53f4fcddf8550a896817bf60c85c77698b5a3708519be40fc006145e7814"
+    },
+    {
+      "path": "portfolio/screenshots/22-sql-gmv-chart.jpg",
+      "bytes": 65884,
+      "sha256": "d4018632cbe6400306769d5b617953cf8329855787ad31fed86d18fcce54a4e2"
+    },
+    {
+      "path": "portfolio/screenshots/manifest.json",
+      "bytes": 5576,
+      "sha256": "68083bfe7bf29ffcc3eb21213d825e5598e1421c8c380dd24e8201a41f409b4c"
+    },
+    {
+      "path": "portfolio/showcase/enrichment.html",
+      "bytes": 4018,
+      "sha256": "d0aec7668b350a7f2c26d4aa23ced39ee64259c70f63db9ecce2962d28134ea5"
+    },
+    {
+      "path": "portfolio/showcase/overview.html",
+      "bytes": 4154,
+      "sha256": "a862b02cecc327bec02b33736ebe7009ea06e42d517e8177b894e0c92c9181e4"
+    },
+    {
+      "path": "portfolio/showcase/review-mart.html",
+      "bytes": 3416,
+      "sha256": "239c83d77ed8ffb5896df65c352ef7e92413929a4d104138692e8f768d12419d"
+    },
+    {
+      "path": "snowflake/01_setup.sql",
+      "bytes": 1619,
+      "sha256": "4e6192eeadeb645c4337010138ccb52bd326001bb5a1e5bce84611865f4dde3c"
+    },
+    {
+      "path": "snowflake/02_storage_integration.sql",
+      "bytes": 1394,
+      "sha256": "05192198b54bdc2756b0f5b2cda59b89cb45726e8fb11423251a9fb2940f08a8"
+    },
+    {
+      "path": "snowflake/03_stage_and_formats.sql",
+      "bytes": 1470,
+      "sha256": "f4413c668242d82b57300e378a94a211e006e8895afc6666c1d06cd24d30b705"
+    },
+    {
+      "path": "snowflake/04_raw_tables.sql",
+      "bytes": 3110,
+      "sha256": "c39f50ceaa8af91e027dc949b2628d501501704970cf528b237b24e977b4294d"
+    },
+    {
+      "path": "snowflake/05_copy_into.sql",
+      "bytes": 2042,
+      "sha256": "9b87f5dee127f1053e44d459f07fd947186bc85d9eae3fbd623ebed3be9efcfb"
+    },
+    {
+      "path": "snowflake/06_service_user_template.sql",
+      "bytes": 753,
+      "sha256": "49ba7829fd20f508b9e7a08332af94bbbb5b5f2074b5a52a5f68a6148c4f2b5f"
+    },
+    {
+      "path": "tests/ai/test_app_credit_status.py",
+      "bytes": 6952,
+      "sha256": "e6ed4e546c066864194825a39a3e9a4b3bafe3d4117f1355d0d6c3b9ca4e2871"
+    },
+    {
+      "path": "tests/ai/test_common.py",
+      "bytes": 6651,
+      "sha256": "df9da1bc61acfe0d513f6e630a1527768fc2266c63e27e80f0f8b7523ada3483"
+    },
+    {
+      "path": "tests/ai/test_enrichment.py",
+      "bytes": 6577,
+      "sha256": "c653f36b24b999ee6d329399507531eba2caaa77dcc96480e7e0047d7b304f46"
+    },
+    {
+      "path": "tests/ai/test_preflight.py",
+      "bytes": 5837,
+      "sha256": "8b0957ff01bc4c87a8963ab4bfc8fcccb445a89ad3897f060640864674957f84"
+    },
+    {
+      "path": "tests/ai/test_public_config.py",
+      "bytes": 3001,
+      "sha256": "049b12fdd9c24e4df29141b89aacf9d4f7042014914f83a16bf309331fa4c6f9"
+    },
+    {
+      "path": "tests/ai/test_rag.py",
+      "bytes": 10371,
+      "sha256": "52d3894f94a53df76a68de5db778df0f50e89aecf8194913930ac41bc04ff13d"
+    },
+    {
+      "path": "tests/ai/test_rag_credit_ui.py",
+      "bytes": 2590,
+      "sha256": "0e0840aed3dc1738e9fa8b6d2f028a80a3dbcd4d0f24e645768a7e1e1759172c"
+    },
+    {
+      "path": "tests/ai/test_sql_query.py",
+      "bytes": 13080,
+      "sha256": "74d113c906e72ab2a26c7c06d6df44be8f64b777a80c0a5c1d9b68e50f01b4e2"
+    },
+    {
+      "path": "zomato/dbt_project.yml",
+      "bytes": 1309,
+      "sha256": "ff2f8ddd28bbe386427c2449bb757be0c2c09c744b8c32f16139bdee587dbc7f"
+    },
+    {
+      "path": "zomato/macros/generate_schema_name.sql",
+      "bytes": 189,
+      "sha256": "7ba66f40b1ac7bd9f716dd148b288a0a04776a31b3b1cd73fbb3d6d9130f6d93"
+    },
+    {
+      "path": "zomato/models/Staging/_ai_sources.yml",
+      "bytes": 2519,
+      "sha256": "be9dbf385d15f9bc63c03c0ca0d6f06dcde307e7a06abb6c18e5d9e9203ee1e7"
+    },
+    {
+      "path": "zomato/models/Staging/_sources.yml",
+      "bytes": 1016,
+      "sha256": "9ab383f14a8e7d0115653d7d2ab59d019c80e83bfecada289847a993a594b5ca"
+    },
+    {
+      "path": "zomato/models/Staging/_staging.yml",
+      "bytes": 8761,
+      "sha256": "bee964fe4934c3c07d980f1502d0ec1985ea4ef0e4091580d005c1d93e8b4823"
+    },
+    {
+      "path": "zomato/models/Staging/stg_food.sql",
+      "bytes": 131,
+      "sha256": "747f423ab29411c1dbb791d2316974103320b5872b3a0286d5800c1ca3eeedd6"
+    },
+    {
+      "path": "zomato/models/Staging/stg_menu.sql",
+      "bytes": 215,
+      "sha256": "171958e00110490035a246050c837b73c19861ca455973bc7b0f87533d0c1e99"
+    },
+    {
+      "path": "zomato/models/Staging/stg_order_items.sql",
+      "bytes": 205,
+      "sha256": "74cd884224e0d1b300ddb2176fee2e68bb5a68b53d436642e92312367d667a3f"
+    },
+    {
+      "path": "zomato/models/Staging/stg_orders.sql",
+      "bytes": 431,
+      "sha256": "7ccbb8d1f7ae7d7ef65dda200eb6bcbb3a8b2123a28fb253a0c66ed63a466530"
+    },
+    {
+      "path": "zomato/models/Staging/stg_restaurants.sql",
+      "bytes": 523,
+      "sha256": "7d0a96d118fcc16010ed0414336a1fc94778cd665eb0e97c5ea50355525719ad"
+    },
+    {
+      "path": "zomato/models/Staging/stg_reviews.sql",
+      "bytes": 367,
+      "sha256": "bc1703f65e792dfa9240932d5f21e38d261db8c5d2c6cda5e09eb6436742c8b0"
+    },
+    {
+      "path": "zomato/models/Staging/stg_users.sql",
+      "bytes": 354,
+      "sha256": "b67ddb3d5cfe1380bfe71541db0b72317dbe906facfbdbcafd503fc02c1dcf97"
+    },
+    {
+      "path": "zomato/models/marts/_ai_marts.yml",
+      "bytes": 1519,
+      "sha256": "54594c3e4de7b43841c255b2c334f96f03582d58214bd72fcbf86fd16bb7497e"
+    },
+    {
+      "path": "zomato/models/marts/_marts.yml",
+      "bytes": 11533,
+      "sha256": "053d7e923d66eac462c38a6ea41f3dd0b695d182f4c30e9d7ccd3aa285668d0e"
+    },
+    {
+      "path": "zomato/models/marts/dim_customer.sql",
+      "bytes": 324,
+      "sha256": "50229dca07fad53df137172446171b53b9045287307722ce591e45437b458e9d"
+    },
+    {
+      "path": "zomato/models/marts/dim_date.sql",
+      "bytes": 353,
+      "sha256": "80fa5b6996585de20921907249839dd5d5cb03fdcdbab535716df878dd31b22a"
+    },
+    {
+      "path": "zomato/models/marts/dim_food.sql",
+      "bytes": 66,
+      "sha256": "8bfb8e5e7c52d3d14fbfdf6cc09028d3655810491d769a4b0851d7faf53494cf"
+    },
+    {
+      "path": "zomato/models/marts/dim_restaurants.sql",
+      "bytes": 154,
+      "sha256": "a35ebdaa602ff8e8aa6df5fdad5a6dde10978faf764fbc99541ef27ac3afce76"
+    },
+    {
+      "path": "zomato/models/marts/fact_order_items.sql",
+      "bytes": 531,
+      "sha256": "fb49cc2fc74a23700e240dfefb65888d161865128cb6d9545294c2227214bc5e"
+    },
+    {
+      "path": "zomato/models/marts/fct_orders.sql",
+      "bytes": 565,
+      "sha256": "7f9869b408242c0b70c8bced1edefa470842611b7ec3e8ae0e360217b31d9eff"
+    },
+    {
+      "path": "zomato/models/marts/mart_daily_city_revenune.sql",
+      "bytes": 344,
+      "sha256": "16f45742363c03b86992905e77f45d0815d1c38e45d223ad0b825c8736cb9e85"
+    },
+    {
+      "path": "zomato/models/marts/mart_delivery_sla.sql",
+      "bytes": 281,
+      "sha256": "e219ddcf08afec3108120fdfa82984266a89edcfa9f442706035eb205108b017"
+    },
+    {
+      "path": "zomato/models/marts/mart_restaurant_performance.sql",
+      "bytes": 364,
+      "sha256": "97d001879ad419dfb4588fad357264a0da08046d3052b5268ee6d8375fc020c5"
+    },
+    {
+      "path": "zomato/models/marts/mart_review_insights.sql",
+      "bytes": 417,
+      "sha256": "085df8223fd027bf0e3bdf8dda9ff295529b8986f534a0dda12bc155c997d60a"
+    },
+    {
+      "path": "zomato/tests/ai_review_enriched_validity.sql",
+      "bytes": 516,
+      "sha256": "42186fe83661de463fa151ff3b0f1c9ffe2b510ed183f648f4eaee0e883c06f9"
+    },
+    {
+      "path": "zomato/tests/ai_review_insights_grain.sql",
+      "bytes": 369,
+      "sha256": "79f1a1dd2f5fa6190096035d26977fbde9171ddab22cf4665c08a0afcd3be743"
+    }
+  ]
+}

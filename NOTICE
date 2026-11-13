@@ -1,0 +1,22 @@
+This learning project follows Darshil Parmar's Zomato AI Data Engineering
+End-to-End Project:
+https://github.com/darshilparmar/zomato-ai-data-engineering-end-to-end-project
+
+Tutorial baseline: 57d147dfe6aaed6bfe7c215d74185c39358790a4
+Video: https://www.youtube.com/watch?v=kYwaNMQ3XT8
+
+The Snowflake setup and AWS IAM templates were obtained from that baseline.
+The dbt models and pipeline follow the tutorial, with local adaptations.
+The bounded AI provider, persistent caches, citation checks, SQL validation,
+credit gates, offline tests and portable public configuration are adaptations
+prepared for this project. See docs/EXPORT_ADAPTATIONS.md for details.
+
+No LICENSE file or license declaration was found in the pinned upstream root
+or README when checked on November 13, 2026. No MIT or other upstream license
+is asserted here. This notice records attribution and does not grant rights
+to third-party material. Third-party rights remain with their respective
+owners. A redistribution permission or license review remains separate from
+the technical preparation of this export.
+
+The dataset is not included. Obtain it from the creator's documented source
+and review any applicable dataset terms before use or redistribution.

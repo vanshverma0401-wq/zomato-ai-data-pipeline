@@ -1,0 +1,39 @@
+version: 2
+models:
+- name: mart_review_insights
+  description: AI review summary at (restaurant city, topic, sentiment_label) grain, joining stored classifications to staged
+    reviews. Covers the accumulating enriched subset only; the per-run sample cap is not a population sample or quality evaluation.
+    Model labels are derived interpretations rather than ground truth.
+  config:
+    tags:
+    - ai
+  columns:
+  - name: topic
+    data_tests:
+    - not_null:
+        config:
+          tags:
+          - ai
+    description: 'Classifier topic: food quality, delivery, pricing, service, packaging or other.'
+  - name: sentiment_label
+    data_tests:
+    - not_null:
+        config:
+          tags:
+          - ai
+    description: Classifier label positive, negative or neutral; not the source star rating.
+  - name: reviews
+    data_tests:
+    - not_null:
+        config:
+          tags:
+          - ai
+    description: COUNT(*) of matched enriched-review rows in this city/topic/sentiment group.
+  - name: city
+    description: Restaurant city obtained from the matched staged review; may be NULL.
+  - name: avg_sentiment_score
+    description: Mean model-assigned score in [-1,1], rounded to three decimals; not a calibrated probability.
+  - name: avg_star_rating
+    description: Mean non-null original review rating in the matched subset, rounded to two decimals.
+  - name: flagged_issues
+    description: COUNT_IF(key_issue IS NOT NULL); indicates a model-supplied issue phrase rather than a verified incident.

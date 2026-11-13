@@ -1,0 +1,221 @@
+version: 2
+models:
+- name: fct_orders
+  columns:
+  - name: order_id
+    data_tests:
+    - unique
+    - not_null
+    description: Source order identifier; intended order key.
+  - name: customer_id
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_customer')
+          field: customer_id
+    description: Source user_id renamed to customer_id.
+  - name: order_status
+    data_tests:
+    - accepted_values:
+        arguments:
+          values:
+          - Delivered
+          - Cancelled
+          - Refunded
+    description: Source status label. The configured fact test permits Delivered, Cancelled and Refunded.
+  - name: order_timestamp
+    description: Source order timestamp, retained without a timezone conversion in this model.
+  - name: order_date
+    description: Source order calendar date; the SQL does not derive it from the timestamp.
+  - name: restaurant_id
+    description: Source order r_id renamed to restaurant_id.
+  - name: city
+    description: Trimmed final comma-separated segment of the source restaurant_city field; not a customer delivery location.
+  - name: cuisine
+    description: Source cuisine value, retained as recorded.
+  - name: items_count
+    description: Recorded items_count field; not recomputed from item rows.
+  - name: sales_qty
+    description: Recorded sales quantity field; not recomputed from item rows.
+  - name: subtotal
+    description: Recorded subtotal amount; not independently reconciled in this model.
+  - name: discount
+    description: Recorded discount amount; not recalculated in this model.
+  - name: delivery_fee
+    description: Recorded delivery fee amount, retained without recalculation.
+  - name: gst
+    description: Recorded GST amount, retained without recalculation or tax validation.
+  - name: sales_amount
+    description: Recorded order sales amount used by the analytical marts; does not establish settlement, profit or accounting
+      revenue.
+  - name: payment_method
+    description: Source payment-method label, retained as recorded.
+  - name: is_delivered
+    description: SQL comparison order_status = 'Delivered'; a NULL status produces NULL.
+  - name: customer_rating
+    description: Source order customer-rating value; not inferred from review text.
+  - name: delivery_time_min
+    description: Source recorded delivery duration in minutes; not recomputed from timestamps.
+  description: 'Incremental order fact. Intended grain and merge key: order_id. Selects the staged order attributes without
+    currency. On incremental runs, only rows whose order_timestamp exceeds the existing maximum are considered; updates or
+    late arrivals at older/equal timestamps and source deletions are not recovered by this policy.'
+- name: fact_order_items
+  description: 'Incremental order-item fact. Intended grain and merge key: order_item_id. Inner-joins staged items to orders,
+    so unmatched items are excluded. Incremental selection uses the parent order timestamp above the existing maximum; late
+    items or corrections for older/equal order timestamps are not handled.'
+  columns:
+  - name: order_item_id
+    description: Source order-item identifier and configured incremental merge key.
+  - name: order_id
+    description: Parent order identifier used in the inner join to stg_orders.
+  - name: restaurant_id
+    description: Restaurant identifier from the item row, not overwritten by the order header.
+  - name: f_id
+    description: Food identifier from the item row.
+  - name: order_ts
+    description: Matched order_timestamp, renamed to order_ts and used as the incremental high-water mark.
+  - name: order_date
+    description: Calendar date from the matched order header.
+  - name: city
+    description: Restaurant-city suffix from the matched order header.
+  - name: price
+    description: Recorded staged item price; no price revaluation is performed.
+  - name: quantity
+    description: Recorded staged item quantity.
+  - name: line_amount
+    description: Recorded staged line amount; not independently reconciled here.
+- name: dim_customer
+  description: 'Customer dimension projected from stg_users. Intended grain: customer_id. Adds fixed tutorial age-band labels
+    and retains recorded customer attributes. No city or current-address field is invented.'
+  columns:
+  - name: customer_id
+    description: Source user_id cast to NUMBER after a successful TRY_TO_NUMBER filter; staging tests cover uniqueness and
+      non-nullness.
+  - name: customer_name
+    description: Recorded source name, renamed to customer_name.
+  - name: email
+    description: Recorded email converted to lowercase; no email validation is performed.
+  - name: age
+    description: Source age parsed with TRY_TO_NUMBER; invalid values become NULL and no age-range check is added.
+  - name: gender
+    description: Recorded source gender value; not inferred.
+  - name: marital_status
+    description: Recorded source marital-status value; not inferred.
+  - name: occupation
+    description: Recorded source occupation value; not inferred.
+  - name: income_band
+    description: Source monthly_income renamed to income_band; the SQL does not create income buckets.
+  - name: education
+    description: Recorded source education value; not inferred.
+  - name: family_size
+    description: Source family size parsed with TRY_TO_NUMBER; invalid values become NULL.
+  - name: age_segment
+    description: 'Tutorial age-band label: age <25 Gen Z, <40 Millennial, <55 Gen X, NULL Unknown, otherwise Boomer. These
+      fixed labels are not birth-year cohort analysis.'
+- name: dim_restaurants
+  description: 'Restaurant dimension projected from stg_restaurants with a non-null ID filter. Intended grain: restaurant_id,
+    supported by upstream key tests. Location is the restaurant location.'
+  columns:
+  - name: restaurant_id
+    description: Source id cast to NUMBER after a successful TRY_TO_NUMBER filter; tested for uniqueness and non-nullness
+      in staging.
+  - name: restaurant_name
+    description: Source restaurant name, renamed from name.
+  - name: city
+    description: Trimmed final comma-separated segment of the source restaurant city field.
+  - name: rating
+    description: Source rating parsed as DECIMAL(3,1); '--' and unparseable values become NULL. No rating-range check is added
+      here.
+  - name: rating_count
+    description: First contiguous run of digits from the recorded rating-count text, parsed as NUMBER; not a general thousands-separator
+      parser.
+  - name: cost_for_two
+    description: First contiguous run of digits from the recorded cost text, parsed as NUMBER; not a general currency-format
+      parser.
+  - name: cuisine
+    description: Source restaurant cuisine value, retained as recorded.
+- name: dim_food
+  description: 'Food dimension projected from stg_food. Grain: one retained source food row, intended to be identified by
+    f_id; this projection adds no deduplication.'
+  columns:
+  - name: f_id
+    description: Source food identifier. NULL values are excluded; this SQL does not deduplicate IDs.
+  - name: food_name
+    description: Recorded item field renamed to food_name.
+  - name: veg_or_non_veg
+    description: Recorded vegetarian/non-vegetarian label normalized with INITCAP.
+- name: dim_date
+  description: 'Generated calendar dimension. Intended grain: one calendar date in the fixed 2024-01-01 through 2026-12-31
+    range. Uses a bounded Snowflake date generator; it contains calendar labels, not holidays or business-day rules.'
+  columns:
+  - name: date_day
+    description: Generated date beginning at 2024-01-01 and filtered to no later than 2026-12-31.
+  - name: year
+    description: Calendar year extracted from date_day.
+  - name: month
+    description: Calendar month number extracted from date_day.
+  - name: month_name
+    description: Snowflake MONTHNAME label for date_day.
+  - name: day_name
+    description: Snowflake DAYNAME label for date_day.
+  - name: is_weekend
+    description: TRUE when ISO day-of-week is 6 or 7 (Saturday or Sunday).
+- name: mart_daily_city_revenune
+  description: Daily city summary at (order_date, city) grain. Counts all order facts and summarizes delivered sales separately.
+    The tutorial filename misspelling is retained. GMV/revenue are recorded delivered sales, not verified settlement, refunds
+    or profit; Snowflake COUNT_IF/DIV0 NULL and zero behavior is retained.
+  columns:
+  - name: order_date
+    description: Source order date defining the daily cohort.
+  - name: city
+    description: Restaurant-city suffix retained on the order fact; not customer geography.
+  - name: orders
+    description: COUNT(*) across all order statuses in this date/city group.
+  - name: delivered_orders
+    description: COUNT_IF(is_delivered), identifying order_status = 'Delivered'; the source SQL's NULL behavior is retained.
+  - name: cancel_rate
+    description: ROUND(DIV0(COUNT_IF(order_status='Cancelled'), COUNT(*)),4); denominator is all orders in the group, including
+      other statuses.
+  - name: gmv
+    description: SUM of sales_amount for delivered orders, with other rows contributing zero. NULL delivered amounts are not
+      independently repaired.
+  - name: aov
+    description: Delivered GMV divided by delivered-order count with DIV0, rounded to two decimals; retains SQL NULL/zero
+      behavior.
+- name: mart_delivery_sla
+  description: Delivered-order duration summary at (city, order_hour) grain. The p50 and p90 aggregate non-null recorded delivery_time_min.
+    Despite the tutorial name, this model does not calculate a promised-time SLA, lateness threshold or on-time rate.
+  columns:
+  - name: city
+    description: Restaurant-city suffix from the order fact.
+  - name: order_hour
+    description: HOUR(order_timestamp) defining the order-time cohort, without an added timezone conversion.
+  - name: delivered_orders
+    description: COUNT_IF(is_delivered) after filtering to delivered orders; this can include rows whose delivery_time_min
+      is NULL.
+  - name: p50
+    description: MEDIAN of non-null source delivery_time_min for delivered orders, rounded to one decimal.
+  - name: p90
+    description: Continuous 90th percentile of non-null source delivery_time_min for delivered orders, rounded to one decimal.
+- name: mart_restaurant_performance
+  description: Restaurant summary grouped by restaurant_id and the joined restaurant name/city/cuisine. Counts all order statuses;
+    delivered sales are summed separately. Customer-rating and delivery-time averages have no delivered-only WHERE filter
+    and use all non-null source values.
+  columns:
+  - name: restaurant_id
+    description: Restaurant key from fct_orders.
+  - name: restaurant_name
+    description: Name from the left-joined restaurant dimension; NULL when unmatched.
+  - name: city
+    description: City from dim_restaurants rather than the order-header city field; NULL when unmatched.
+  - name: cuisine
+    description: Cuisine from dim_restaurants; NULL when unmatched.
+  - name: orders
+    description: COUNT(*) across all joined order facts and statuses for this restaurant group.
+  - name: revenue
+    description: SUM of recorded sales_amount for delivered orders, with other rows contributing zero; not accounting revenue
+      or profit.
+  - name: avg_customer_rating
+    description: AVG(customer_rating) across non-null values for all statuses, rounded to two decimals.
+  - name: avg_delivery_min
+    description: AVG(delivery_time_min) across non-null values for all statuses, rounded to one decimal.

@@ -1,0 +1,180 @@
+version: 2
+models:
+- name: stg_orders
+  columns:
+  - name: order_id
+    data_tests:
+    - unique
+    - not_null
+    description: Source order identifier; intended order key.
+  - name: customer_id
+    data_tests:
+    - not_null
+    description: Source user_id renamed to customer_id.
+  - name: restaurant_id
+    data_tests:
+    - not_null
+    description: Source order r_id renamed to restaurant_id.
+  - name: order_timestamp
+    description: Source order timestamp, retained without a timezone conversion in this model.
+  - name: order_date
+    description: Source order calendar date; the SQL does not derive it from the timestamp.
+  - name: city
+    description: Trimmed final comma-separated segment of the source restaurant_city field; not a customer delivery location.
+  - name: cuisine
+    description: Source cuisine value, retained as recorded.
+  - name: items_count
+    description: Recorded items_count field; not recomputed from item rows.
+  - name: sales_qty
+    description: Recorded sales quantity field; not recomputed from item rows.
+  - name: subtotal
+    description: Recorded subtotal amount; not independently reconciled in this model.
+  - name: discount
+    description: Recorded discount amount; not recalculated in this model.
+  - name: delivery_fee
+    description: Recorded delivery fee amount, retained without recalculation.
+  - name: gst
+    description: Recorded GST amount, retained without recalculation or tax validation.
+  - name: sales_amount
+    description: Recorded order sales amount used by the analytical marts; does not establish settlement, profit or accounting
+      revenue.
+  - name: currency
+    description: Source currency value. This field is present in staging but is not selected into fct_orders.
+  - name: payment_method
+    description: Source payment-method label, retained as recorded.
+  - name: order_status
+    description: Source status label. The configured fact test permits Delivered, Cancelled and Refunded.
+  - name: is_delivered
+    description: SQL comparison order_status = 'Delivered'; a NULL status produces NULL.
+  - name: customer_rating
+    description: Source order customer-rating value; not inferred from review text.
+  - name: delivery_time_min
+    description: Source recorded delivery duration in minutes; not recomputed from timestamps.
+  description: 'Order-header staging view. Intended grain: one source order_id. Renames user and restaurant keys, extracts
+    the restaurant city suffix and derives the delivered flag. Source amounts and durations are retained rather than independently
+    reconciled.'
+- name: stg_order_items
+  columns:
+  - name: order_item_id
+    data_tests:
+    - unique
+    - not_null
+    description: Source order-item identifier, tested for uniqueness and non-nullness.
+  - name: order_id
+    description: Source parent order identifier.
+  - name: restaurant_id
+    description: Source item r_id renamed to restaurant_id.
+  - name: f_id
+    description: Source food identifier for this line.
+  - name: price
+    description: Recorded line price cast to DECIMAL(10,2).
+  - name: quantity
+    description: Recorded line quantity cast to NUMBER.
+  - name: line_amount
+    description: Recorded line amount cast to DECIMAL(10,2); not recalculated as price times quantity.
+  description: 'Order-line staging view. Intended grain: one source order_item_id. Renames the restaurant key and casts recorded
+    price, quantity and line amount; it does not recompute line_amount or filter unmatched orders.'
+- name: stg_restaurants
+  columns:
+  - name: restaurant_id
+    data_tests:
+    - unique
+    - not_null
+    description: Source id cast to NUMBER after a successful TRY_TO_NUMBER filter; tested for uniqueness and non-nullness
+      in staging.
+  - name: restaurant_name
+    description: Source restaurant name, renamed from name.
+  - name: city
+    description: Trimmed final comma-separated segment of the source restaurant city field.
+  - name: rating
+    description: Source rating parsed as DECIMAL(3,1); '--' and unparseable values become NULL. No rating-range check is added
+      here.
+  - name: rating_count
+    description: First contiguous run of digits from the recorded rating-count text, parsed as NUMBER; not a general thousands-separator
+      parser.
+  - name: cost_for_two
+    description: First contiguous run of digits from the recorded cost text, parsed as NUMBER; not a general currency-format
+      parser.
+  - name: cuisine
+    description: Source restaurant cuisine value, retained as recorded.
+  - name: license_no
+    description: Recorded lic_no renamed to license_no; not externally verified.
+  description: 'Restaurant staging view. Intended grain: one retained source restaurant ID. Drops IDs that cannot be parsed
+    numerically and normalizes selected text/numeric fields. Digit extraction preserves the tutorial behavior rather than
+    validating every possible display format.'
+- name: stg_users
+  columns:
+  - name: customer_id
+    data_tests:
+    - unique
+    - not_null
+    description: Source user_id cast to NUMBER after a successful TRY_TO_NUMBER filter; staging tests cover uniqueness and
+      non-nullness.
+  - name: customer_name
+    description: Recorded source name, renamed to customer_name.
+  - name: email
+    description: Recorded email converted to lowercase; no email validation is performed.
+  - name: age
+    description: Source age parsed with TRY_TO_NUMBER; invalid values become NULL and no age-range check is added.
+  - name: gender
+    description: Recorded source gender value; not inferred.
+  - name: marital_status
+    description: Recorded source marital-status value; not inferred.
+  - name: occupation
+    description: Recorded source occupation value; not inferred.
+  - name: income_band
+    description: Source monthly_income renamed to income_band; the SQL does not create income buckets.
+  - name: education
+    description: Recorded source education value; not inferred.
+  - name: family_size
+    description: Source family size parsed with TRY_TO_NUMBER; invalid values become NULL.
+  description: 'Customer staging view. Intended grain: one retained source user_id/customer_id. Drops IDs that cannot be parsed
+    numerically, lowercases email and parses age/family size. Demographic fields remain source attributes.'
+- name: stg_reviews
+  columns:
+  - name: review_id
+    data_tests:
+    - unique
+    - not_null
+    description: Source review identifier, tested for uniqueness and non-nullness.
+  - name: order_id
+    description: Recorded related order identifier.
+  - name: customer_id
+    description: Source user_id cast to NUMBER and renamed to customer_id.
+  - name: restaurant_id
+    description: Source restaurant_id cast to STRING in the output.
+  - name: rating
+    description: Source review star-rating field cast to NUMBER; distinct from an AI sentiment score.
+  - name: comment
+    description: Source comment cast to STRING; only NULL comments are excluded by this model.
+  - name: review_date
+    description: Source review_date cast to DATE.
+  - name: city
+    description: Restaurant city from the left join to stg_restaurants, not from the review text or customer address.
+  description: 'Review staging view. Intended grain: one retained source review_id. Excludes NULL comments, retains empty
+    strings, casts selected fields and left-joins restaurant city. A missing restaurant match leaves city NULL; it is not
+    a review-inferred location.'
+- name: stg_food
+  description: 'Food staging view. Grain: one retained source food row, intended to be identified by f_id. Excludes NULL food
+    IDs, renames the item and normalizes the category label; no deduplication is performed.'
+  columns:
+  - name: f_id
+    description: Source food identifier. NULL values are excluded; this SQL does not deduplicate IDs.
+  - name: food_name
+    description: Recorded item field renamed to food_name.
+  - name: veg_or_non_veg
+    description: Recorded vegetarian/non-vegetarian label normalized with INITCAP.
+- name: stg_menu
+  description: 'Menu staging view. Grain: one retained source menu row, intended to be identified by menu_id. Retains only
+    numerically parseable restaurant IDs and positive prices parseable as DECIMAL(10,2).'
+  columns:
+  - name: menu_id
+    description: Recorded source menu-row identifier; no uniqueness test is added by this documentation.
+  - name: restaurant_id
+    description: Source r_id parsed with TRY_TO_NUMBER; unparseable IDs are excluded.
+  - name: f_id
+    description: Recorded food identifier for the menu row.
+  - name: cuisine
+    description: Recorded cuisine value for the menu row.
+  - name: price
+    description: Source price parsed as DECIMAL(10,2); rows with NULL, invalid or non-positive parsed prices are excluded.

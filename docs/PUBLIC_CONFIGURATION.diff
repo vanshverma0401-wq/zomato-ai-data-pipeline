@@ -1,0 +1,159 @@
+--- a/ai/common.py (private metadata redacted)
++++ b/ai/common.py
+@@ -12,9 +12,7 @@
+ from pathlib import Path
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+-CREDIT_EXPIRES_AT = "<PRIVATE_CREDIT_EXPIRY_REDACTED>"
+-ORG_ID = "<PRIVATE_ORGANIZATION_ID_REDACTED>"
+-PROJECT_ID = "<PRIVATE_PROJECT_ID_REDACTED>"
++CREDIT_EXPIRES_AT = datetime(1970, 1, 1, tzinfo=timezone.utc)
+ LIMIT_MICRO_USD = 100000
+ 
+ 
+@@ -34,14 +32,35 @@
+     chat_model: str = "gpt-4o-mini"
+     embedding_model: str = "text-embedding-3-small"
+     database: str = "ZOMATO"
+-    organization_id: str = ORG_ID
+-    project_id: str = PROJECT_ID
++    organization_id: str = field(default_factory=lambda: os.environ.get("OPENAI_ORGANIZATION_ID", ""))
++    project_id: str = field(default_factory=lambda: os.environ.get("OPENAI_PROJECT_ID", ""))
++
++
++def _configured_identity():
++    organization_id = os.environ.get("OPENAI_ORGANIZATION_ID", "").strip()
++    project_id = os.environ.get("OPENAI_PROJECT_ID", "").strip()
++    if not organization_id or not project_id:
++        raise LiveAccessError("Configure your own OPENAI_ORGANIZATION_ID and OPENAI_PROJECT_ID before enabling live requests.")
++    return organization_id, project_id
++
++
++def _credit_expires_at():
++    value = os.environ.get("OPENAI_CREDIT_EXPIRES_AT", "").strip()
++    if not value:
++        return CREDIT_EXPIRES_AT
++    try:
++        expires_at = datetime.fromisoformat(value.replace("Z", "+00:00"))
++        if expires_at.tzinfo is None or expires_at.utcoffset() is None:
++            raise ValueError
++        return expires_at.astimezone(timezone.utc)
++    except ValueError:
++        raise LiveAccessError("OPENAI_CREDIT_EXPIRES_AT must be a verified ISO 8601 timestamp with a timezone.") from None
+ 
+ 
+ def load_settings():
+     from dotenv import load_dotenv
+     load_dotenv(ROOT / ".env.local", override=False)
+-    load_dotenv(Path.home() / ".config/zomato-airflow/runtime.env", override=False)
++    load_dotenv(Path(os.environ.get("ZOMATO_RUNTIME_ENV", str(ROOT / "airflow/runtime.env"))), override=False)
+     sample_n = int(os.environ.get("SAMPLE_N", "5"))
+     rag_sample_n = int(os.environ.get("RAG_SAMPLE_N", "100"))
+     if not 1 <= sample_n <= 20 or not 1 <= rag_sample_n <= 500:
+@@ -81,11 +100,13 @@
+ 
+     def arm(self, *, free_credit_usd, no_paid_fallback, now=None):
+         now = now or datetime.now(timezone.utc)
+-        if now >= CREDIT_EXPIRES_AT:
++        expires_at = _credit_expires_at()
++        organization_id, project_id = _configured_identity()
++        if now >= expires_at:
+             raise LiveAccessError("The recorded promotional credit period has expired. Live requests remain blocked.")
+         if not no_paid_fallback or not math.isfinite(float(free_credit_usd)) or float(free_credit_usd) < LIMIT_MICRO_USD / 1000000:
+             raise LiveAccessError("Confirm at least $0.10 of usable promotional credits and no paid fallback first.")
+-        receipt = {"confirmed_at": now.isoformat(), "expires_at": min(now + timedelta(hours=24), CREDIT_EXPIRES_AT).isoformat(), "free_credit_usd": float(free_credit_usd), "no_paid_fallback": True, "organization_id": ORG_ID, "project_id": PROJECT_ID}
++        receipt = {"confirmed_at": now.isoformat(), "expires_at": min(now + timedelta(hours=24), expires_at).isoformat(), "free_credit_usd": float(free_credit_usd), "no_paid_fallback": True, "organization_id": organization_id, "project_id": project_id}
+         with self._connect() as conn:
+             conn.execute("INSERT OR REPLACE INTO state VALUES ('credit_confirmation', ?)", (json.dumps(receipt),))
+ 
+@@ -94,9 +115,10 @@
+         if row is None:
+             raise LiveAccessError("Live AI is locked. Complete the free-credit check in FINAL_TESTING.md first.")
+         receipt = json.loads(row[0])
+-        if now >= CREDIT_EXPIRES_AT or now >= datetime.fromisoformat(receipt["expires_at"]) or not receipt["no_paid_fallback"]:
++        if now >= _credit_expires_at() or now >= datetime.fromisoformat(receipt["expires_at"]) or not receipt["no_paid_fallback"]:
+             raise LiveAccessError("The free-credit confirmation expired. Live requests are blocked.")
+-        if receipt.get("organization_id") != ORG_ID or receipt.get("project_id") != PROJECT_ID:
++        organization_id, project_id = _configured_identity()
++        if receipt.get("organization_id") != organization_id or receipt.get("project_id") != project_id:
+             raise LiveAccessError("The credit confirmation belongs to a different project.")
+         used = conn.execute("SELECT COALESCE(SUM(amount),0) FROM reservations").fetchone()[0]
+         if used + amount > LIMIT_MICRO_USD:
+@@ -120,7 +142,7 @@
+         with self._connect() as conn:
+             used = conn.execute("SELECT COALESCE(SUM(amount),0) FROM reservations").fetchone()[0]
+             row = conn.execute("SELECT value FROM state WHERE name='credit_confirmation'").fetchone()
+-        return {"reserved_micro_usd": used, "limit_micro_usd": LIMIT_MICRO_USD, "credit_confirmation": None if row is None else json.loads(row[0]), "credit_period_expires_at": CREDIT_EXPIRES_AT.isoformat()}
++        return {"reserved_micro_usd": used, "limit_micro_usd": LIMIT_MICRO_USD, "credit_confirmation": None if row is None else json.loads(row[0]), "credit_period_expires_at": _credit_expires_at().isoformat()}
+ 
+ 
+ def live_access_status(settings=None, *, now=None):
+@@ -159,6 +181,8 @@
+     def _request(self, endpoint, payload, reserve):
+         if not self.settings.api_key.startswith("sk-"):
+             raise LiveAccessError("The private OpenAI API key is missing.")
++        if (self.settings.organization_id, self.settings.project_id) != _configured_identity():
++            raise LiveAccessError("The provider settings do not match the configured OpenAI organization and project.")
+         self.ledger.reserve(reserve, now=self.now())
+         headers = {"Authorization": "Bearer " + self.settings.api_key, "Content-Type": "application/json", "OpenAI-Organization": self.settings.organization_id, "OpenAI-Project": self.settings.project_id}
+         try:
+@@ -224,7 +248,7 @@
+     required = ("SNOWFLAKE_ACCOUNT", "SNOWFLAKE_SERVICE_LOGIN", "SNOWFLAKE_KEY_PASSPHRASE")
+     if any(not os.environ.get(key) for key in required):
+         raise RuntimeError("The existing Snowflake service configuration is missing.")
+-    key_path = os.environ.get("SNOWFLAKE_PRIVATE_KEY_PATH", str(Path.home() / ".config/zomato-airflow/secrets/snowflake_airflow_key.p8"))
++    key_path = os.environ.get("SNOWFLAKE_PRIVATE_KEY_PATH", str(ROOT / "airflow/secrets/snowflake_airflow_key.p8"))
+     connection = None
+     try:
+         connection = snowflake.connector.connect(account=os.environ["SNOWFLAKE_ACCOUNT"], user=os.environ["SNOWFLAKE_SERVICE_LOGIN"], private_key_file=key_path, private_key_file_pwd=os.environ["SNOWFLAKE_KEY_PASSPHRASE"], authenticator="SNOWFLAKE_JWT", role="DBT_ROLE", warehouse="ZOMATO_WH", database="ZOMATO", schema=schema, login_timeout=20, network_timeout=40, session_parameters={"STATEMENT_TIMEOUT_IN_SECONDS": 30, "STATEMENT_QUEUED_TIMEOUT_IN_SECONDS": 30, "QUERY_TAG": "zomato_ai_query" if query_only else "zomato_ai_enrichment"})
+--- a/tests/ai/test_common.py (private metadata redacted)
++++ b/tests/ai/test_common.py
+@@ -1,8 +1,10 @@
+ import json
++import os
+ import tempfile
+ import unittest
+ from datetime import datetime, timedelta, timezone
+ from pathlib import Path
++from unittest.mock import patch
+ 
+ from ai.common import BudgetLedger, LiveAccessError, Provider, Settings
+ 
+@@ -12,7 +14,14 @@
+         self.temp = tempfile.TemporaryDirectory()
+         self.addCleanup(self.temp.cleanup)
+         self.root = Path(self.temp.name)
+-        self.now = datetime(2026, 11, 13, tzinfo=timezone.utc)
++        environment = patch.dict(os.environ, {
++            "OPENAI_ORGANIZATION_ID": "org-unit-test",
++            "OPENAI_PROJECT_ID": "proj_unit_test",
++            "OPENAI_CREDIT_EXPIRES_AT": "2030-01-05T00:00:00+00:00",
++        })
++        environment.start()
++        self.addCleanup(environment.stop)
++        self.now = datetime(2030, 1, 1, tzinfo=timezone.utc)
+         self.settings = Settings(api_key="sk-test-do-not-display", state_path=self.root)
+ 
+     def arm(self, ledger, **kwargs):
+@@ -28,7 +37,7 @@
+     def test_expired_credit_confirmation_cannot_be_extended_by_rearming(self):
+         ledger = BudgetLedger(self.root)
+         with self.assertRaises(LiveAccessError):
+-            ledger.arm(free_credit_usd=40, no_paid_fallback=True, now=datetime(2026, 11, 18, tzinfo=timezone.utc))
++            ledger.arm(free_credit_usd=40, no_paid_fallback=True, now=datetime(2030, 1, 6, tzinfo=timezone.utc))
+ 
+     def test_paid_fallback_is_rejected(self):
+         with self.assertRaises(LiveAccessError):
+--- a/airflow/airflow.sh (private metadata redacted)
++++ b/airflow/airflow.sh
+@@ -1,8 +1,5 @@
+ #!/bin/bash
+ set -euo pipefail
+ task_dir="$(cd "$(dirname "$0")" && pwd)"
+-private_dir="${ZOMATO_AIRFLOW_PRIVATE_DIR:-$HOME/.config/zomato-airflow}"
+-export DOCKER_CONFIG="$private_dir/docker"
+-export DOCKER_HOST="unix://$HOME/.colima/zomato/docker.sock"
+-unset DOCKER_CONTEXT
+-exec docker compose --env-file "$private_dir/runtime.env" -f "$task_dir/docker-compose.yaml" "$@"
++runtime_env="${ZOMATO_RUNTIME_ENV:-$task_dir/runtime.env}"
++exec docker compose --env-file "$runtime_env" -f "$task_dir/docker-compose.yaml" "$@"

@@ -1,0 +1,46 @@
+{
+  "verified_at_utc": "2026-11-13T18:52:32.819951Z",
+  "run_id": "release_final_20261113T185136Z",
+  "state": "success",
+  "start_utc": "2026-11-13T18:51:48.664029Z",
+  "end_utc": "2026-11-13T18:52:32.819951Z",
+  "tasks": [
+    {
+      "task_id": "reload_raw",
+      "state": "success",
+      "try_number": 1
+    },
+    {
+      "task_id": "dbt_build_core",
+      "state": "success",
+      "try_number": 1
+    },
+    {
+      "task_id": "enrich_reviews",
+      "state": "success",
+      "try_number": 1
+    },
+    {
+      "task_id": "dbt_build_ai",
+      "state": "success",
+      "try_number": 1
+    }
+  ],
+  "dbt": {
+    "models_passed": 17,
+    "data_tests_passed": 28,
+    "core_pass": 32,
+    "ai_pass": 13,
+    "sources": 8,
+    "documented_columns": 144
+  },
+  "enrichment": {
+    "selected": 5,
+    "saved": 5
+  },
+  "facts": {
+    "orders": 10000000,
+    "order_items": 22998179
+  },
+  "scope": "Existing tutorial data replay, not a fresh ingestion throughput benchmark."
+}

@@ -1,0 +1,6 @@
+18:52:27  Running with dbt=1.12.6
+18:52:27  Registered adapter: snowflake=1.12.5
+18:52:27  Found 17 models, 28 data tests, 8 sources, 564 macros
+18:52:32  Finished running 1 table model, 12 data tests in 0 hours 0 minutes and 4.27 seconds (4.27s).
+18:52:32  Completed successfully
+18:52:32  Done. PASS=13 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=13
