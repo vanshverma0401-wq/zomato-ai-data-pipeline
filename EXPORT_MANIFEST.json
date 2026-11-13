@@ -156,8 +156,8 @@
     },
     {
       "path": "docs/CASE_STUDY.md",
-      "bytes": 9586,
-      "sha256": "dfe45e41d8f31b442926056d558b3aa2e48202365cb0f17e30e27046bb26ee57"
+      "bytes": 9592,
+      "sha256": "1e18cfabf9346dd7466f1189339fad657b28b0fc6eaf4bb67e3b5aa84de95e12"
     },
     {
       "path": "docs/DATA.md",
@@ -186,8 +186,8 @@
     },
     {
       "path": "docs/SHUTDOWN.md",
-      "bytes": 2291,
-      "sha256": "9436e1e1447759d32a1e2776c984fa5bc58f709c4ae3fc54b213ff42d39190fc"
+      "bytes": 2912,
+      "sha256": "19ec0e21a19ceff9bd53a7e7d17142db380ede6879b6488674962632652b9bc3"
     },
     {
       "path": "docs/VERIFICATION.md",
@@ -196,13 +196,23 @@
     },
     {
       "path": "portfolio/README.md",
-      "bytes": 4469,
-      "sha256": "517f2b82fb09bda78a4ca4fdd06957b04e2dad4ee003269ce3b5df3539e841af"
+      "bytes": 5483,
+      "sha256": "59446879515abbb81a87126296d4fe84795c31864d83c6c9cb3a23dc82fb5bf7"
+    },
+    {
+      "path": "portfolio/build_chart.py",
+      "bytes": 4675,
+      "sha256": "3b29c8df1cc6e277dc94d2f1afa2d627fcf9e7b51854cf33b9f0853f9b1edf8d"
     },
     {
       "path": "portfolio/build_showcase.py",
-      "bytes": 7443,
-      "sha256": "8022bde77202a681aa7ab3906d704b1f364a08d3a0bc22c78196298def3f9137"
+      "bytes": 7459,
+      "sha256": "e5fccc2d1d825a565bc03c97a3ee4f20ae398dd7e9ae6b574b69eb904ea39f43"
+    },
+    {
+      "path": "portfolio/evidence/closeout.json",
+      "bytes": 536,
+      "sha256": "c1a779f50f9b9fa1ab62742fa9069851d11efa6573caa020f57659fe08f8fe93"
     },
     {
       "path": "portfolio/evidence/dbt_build_ai_summary.txt",
@@ -225,9 +235,19 @@
       "sha256": "a800e61258bb4f0c60d2e0747117cae528c6e590e7fee1acbc8e9f314cd2a98f"
     },
     {
+      "path": "portfolio/evidence/sql_examples.json",
+      "bytes": 3426,
+      "sha256": "d7a71240cbf372d428fbe5721ffd18729d5cf72c78594427a555fb2307d20de9"
+    },
+    {
       "path": "portfolio/evidence/warehouse_examples.json",
       "bytes": 4467,
       "sha256": "d966d4bba665727587d97459d2addde91a56125d0b22d1194daaf2208b738dce"
+    },
+    {
+      "path": "portfolio/requirements-portfolio.txt",
+      "bytes": 19,
+      "sha256": "de950d3b75e4ad1a760c121533e06390c84574f7dd0b53c0eaa742ab6d5c2f38"
     },
     {
       "path": "portfolio/screenshots/08-sql-delivered-gmv.jpg",
@@ -276,8 +296,8 @@
     },
     {
       "path": "portfolio/screenshots/17-enrichment-three-examples.jpg",
-      "bytes": 123512,
-      "sha256": "786041b71ef539006133b2ee366a8813818ba8592d4fea4a876c1f28911cda49"
+      "bytes": 124663,
+      "sha256": "4b7b9dd7234d4b24f8e5a4f88b12ff48861378792fa86406cabdea4ff06a5911"
     },
     {
       "path": "portfolio/screenshots/18-review-insights-mart.jpg",
@@ -301,28 +321,38 @@
     },
     {
       "path": "portfolio/screenshots/22-sql-gmv-chart.jpg",
-      "bytes": 65884,
-      "sha256": "d4018632cbe6400306769d5b617953cf8329855787ad31fed86d18fcce54a4e2"
+      "bytes": 80192,
+      "sha256": "4453d19bea9a1456f983fa01ec20c03cc9a134bc7552ab558263533ee316b796"
     },
     {
       "path": "portfolio/screenshots/manifest.json",
-      "bytes": 5576,
-      "sha256": "68083bfe7bf29ffcc3eb21213d825e5598e1421c8c380dd24e8201a41f409b4c"
+      "bytes": 5702,
+      "sha256": "261d35add7f63ed6ac32cb2b25b42abd7a2bced032a8495bcc84ce96b249487b"
     },
     {
       "path": "portfolio/showcase/enrichment.html",
-      "bytes": 4018,
-      "sha256": "d0aec7668b350a7f2c26d4aa23ced39ee64259c70f63db9ecce2962d28134ea5"
+      "bytes": 4034,
+      "sha256": "4734d8faef1d921358ce2d2d28cfe58d80e0add34f236637c59a92430f5ebb6f"
+    },
+    {
+      "path": "portfolio/showcase/gmv-delivered-cities.png",
+      "bytes": 97996,
+      "sha256": "9260405b157f7ff54ff00b701b0b53b3dd8ea9ad1779feead555fe13f579e4ed"
+    },
+    {
+      "path": "portfolio/showcase/gmv-delivered-cities.svg",
+      "bytes": 13107,
+      "sha256": "294c57edbadee348ba553c76ebe8e228e33c7419f97ada72ea7ac717f36266aa"
     },
     {
       "path": "portfolio/showcase/overview.html",
-      "bytes": 4154,
-      "sha256": "a862b02cecc327bec02b33736ebe7009ea06e42d517e8177b894e0c92c9181e4"
+      "bytes": 4170,
+      "sha256": "13fed9d56fe57221b059106b9d7d46d555344de4796cc856713ab22964677f06"
     },
     {
       "path": "portfolio/showcase/review-mart.html",
-      "bytes": 3416,
-      "sha256": "239c83d77ed8ffb5896df65c352ef7e92413929a4d104138692e8f768d12419d"
+      "bytes": 3432,
+      "sha256": "76dba0dc120cca8d589757452b38f185a72530d161639515c642e0ae59548f11"
     },
     {
       "path": "snowflake/01_setup.sql",
@@ -524,5 +554,6 @@
       "bytes": 369,
       "sha256": "79f1a1dd2f5fa6190096035d26977fbde9171ddab22cf4665c08a0afcd3be743"
     }
-  ]
+  ],
+  "closeout": "Dedicated cloud resources removed after approved backup and evidence capture; local runtime stopped."
 }

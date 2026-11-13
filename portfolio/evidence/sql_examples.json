@@ -1,0 +1,107 @@
+{
+  "source": "Accepted live UI outputs recorded during November 13, 2026 capture; screenshot references are retained evidence. Rates are proportions, durations minutes and monetary numbers recorded source units.",
+  "examples": [
+    {
+      "question": "Top 10 cities by delivered GMV",
+      "sql": "SELECT CITY, SUM(GMV) AS TOTAL_GMV FROM ZOMATO.MARTS.MART_DAILY_CITY_REVENUNE GROUP BY CITY ORDER BY TOTAL_GMV DESC LIMIT 10",
+      "rows_returned": 10,
+      "first_row": {
+        "CITY": "Bangalore",
+        "TOTAL_GMV": 536698846
+      },
+      "screenshot": "08-sql-delivered-gmv.jpg",
+      "final_column_guard": true,
+      "rows": [
+        {
+          "CITY": "Bangalore",
+          "TOTAL_GMV": 536698846
+        },
+        {
+          "CITY": "Delhi",
+          "TOTAL_GMV": 407092721
+        },
+        {
+          "CITY": "Chennai",
+          "TOTAL_GMV": 355572437
+        },
+        {
+          "CITY": "Hyderabad",
+          "TOTAL_GMV": 335669972
+        },
+        {
+          "CITY": "Pune",
+          "TOTAL_GMV": 335136637
+        },
+        {
+          "CITY": "Kolkata",
+          "TOTAL_GMV": 270099895
+        },
+        {
+          "CITY": "Mumbai",
+          "TOTAL_GMV": 215960735
+        },
+        {
+          "CITY": "Ahmedabad",
+          "TOTAL_GMV": 110215317
+        },
+        {
+          "CITY": "Chandigarh",
+          "TOTAL_GMV": 87042771
+        },
+        {
+          "CITY": "Bikaner",
+          "TOTAL_GMV": 66378087
+        }
+      ],
+      "rows_source": "Saved live UI result captured November 13, 2026; no new warehouse query.",
+      "rendered_chart": {
+        "svg": "../showcase/gmv-delivered-cities.svg",
+        "png": "../showcase/gmv-delivered-cities.png",
+        "kind": "Rendered saved-results chart, not a live application screenshot.",
+        "units": "Recorded source units; delivered sales amount, not profit.",
+        "data": "Tutorial-generated orders."
+      }
+    },
+    {
+      "question": "Top 10 cities by highest average delivery time for delivered orders",
+      "sql": "SELECT CITY, AVG(DELIVERY_TIME_MIN) AS AVG_DELIVERY_TIME FROM ZOMATO.MARTS.FCT_ORDERS WHERE IS_DELIVERED = TRUE GROUP BY CITY ORDER BY AVG_DELIVERY_TIME DESC LIMIT 10",
+      "rows_returned": 10,
+      "first_row": {
+        "CITY": "Kohima",
+        "AVG_DELIVERY_TIME": 32.913043
+      },
+      "screenshot": "13-sql-delivery-time.jpg",
+      "final_column_guard": false,
+      "qualification": "Captured after order-grain prompt correction and before the later column-resolution guard; the physical columns were valid."
+    },
+    {
+      "question": "Cancellation rate by payment method",
+      "sql": "SELECT PAYMENT_METHOD, COUNT_IF(ORDER_STATUS = 'Cancelled') / NULLIF(COUNT(*), 0) AS CANCEL_RATE FROM ZOMATO.MARTS.FCT_ORDERS GROUP BY PAYMENT_METHOD LIMIT 100",
+      "rows_returned": 5,
+      "rows": [
+        {
+          "PAYMENT_METHOD": "NetBanking",
+          "CANCEL_RATE": 0.059783
+        },
+        {
+          "PAYMENT_METHOD": "UPI",
+          "CANCEL_RATE": 0.059917
+        },
+        {
+          "PAYMENT_METHOD": "Card",
+          "CANCEL_RATE": 0.060156
+        },
+        {
+          "PAYMENT_METHOD": "COD",
+          "CANCEL_RATE": 0.059814
+        },
+        {
+          "PAYMENT_METHOD": "Wallet",
+          "CANCEL_RATE": 0.059794
+        }
+      ],
+      "screenshot": "21-sql-cancellation-rate.jpg",
+      "final_column_guard": true
+    }
+  ]
+}

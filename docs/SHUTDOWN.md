@@ -24,3 +24,7 @@ Stopping compute does **not** remove Snowflake database storage, Time Travel/Fai
 If permanent cloud cleanup is desired, first verify a local data/source backup and obtain explicit approval for the exact database, warehouse and bucket. Deleting live project data is separate from pausing the demonstration. In a versioned S3 bucket, all retained versions and delete markers must be considered, along with incomplete multipart uploads. Follow [AWS empty-bucket guidance](https://docs.aws.amazon.com/AmazonS3/latest/userguide/empty-bucket.html) and [multipart cleanup guidance](https://docs.aws.amazon.com/AmazonS3/latest/userguide/abort-mpu.html).
 
 Do not add payment details, buy credits, upgrade an account or enable automatic recharge to keep this portfolio demo available. Public code and screenshots remain useful after hosted services are stopped. The repository makes no account-wide zero-charge guarantee.
+
+## Recorded release closeout
+
+After the November 13 evidence capture and explicit approval, the project database, project warehouse and dedicated S3 bucket were removed. S3 reported 15 deleted objects and zero failures before successful bucket deletion. Seven local CSV backups, code, screenshots and saved examples remain intact. All local project services and the dedicated VM were stopped; live AI was locked. The public project is an archived demonstration, not a running hosted deployment. See [sanitized closeout record](../portfolio/evidence/closeout.json). Snowflake recovery retention remains provider-managed.

@@ -87,7 +87,7 @@
     "date": "2026-11-13",
     "width": 1600,
     "height": 1000,
-    "sha256": "786041b71ef539006133b2ee366a8813818ba8592d4fea4a876c1f28911cda49"
+    "sha256": "4b7b9dd7234d4b24f8e5a4f88b12ff48861378792fa86406cabdea4ff06a5911"
   },
   {
     "file": "18-review-insights-mart.jpg",
@@ -127,11 +127,11 @@
   },
   {
     "file": "22-sql-gmv-chart.jpg",
-    "title": "SQL: result chart",
-    "caption": "Live chart of the same delivered-GMV result, rendered locally without another model call.",
+    "title": "SQL: saved GMV result chart",
+    "caption": "Rendered Matplotlib chart of the ten values retained from the accepted live GMV query. All city labels, exact values and units fit; this is a saved-results visualization, not a live application screenshot.",
     "date": "2026-11-13",
     "width": 1600,
     "height": 1000,
-    "sha256": "d4018632cbe6400306769d5b617953cf8329855787ad31fed86d18fcce54a4e2"
+    "sha256": "4453d19bea9a1456f983fa01ec20c03cc9a134bc7552ab558263533ee316b796"
   }
 ]

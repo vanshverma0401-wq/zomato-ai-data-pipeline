@@ -1,0 +1,14 @@
+{
+  "status": "PROJECT_DEMONSTRATION_CLOSED",
+  "date": "2026-11-13",
+  "local_services_stopped": true,
+  "live_ai_locked": true,
+  "project_database_removed": true,
+  "project_warehouse_removed": true,
+  "dedicated_s3_bucket_removed": true,
+  "s3_deleted_objects": 15,
+  "s3_failed_deletions": 0,
+  "local_csv_backups_retained": 7,
+  "local_backup_bytes": 2453541660,
+  "scope": "Dedicated tutorial resources only. Provider-managed recovery retention may remain after a database drop; this is not an account-wide billing guarantee."
+}
